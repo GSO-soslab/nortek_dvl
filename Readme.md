@@ -13,7 +13,7 @@ This version tested in ubuntu 18.04
 - Install DVL driver
     ```
     $ cd ~/your_path_catkin_ws/src
-    $ git clone https://github.com/URIsoslab/nortek_dvl.git
+    $ git clone https://github.com/GSO-soslab/nortek_dvl.git
     ```
 
 ## Build
