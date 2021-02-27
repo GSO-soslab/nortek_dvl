@@ -1,5 +1,5 @@
 # ROS driver for Nortek DVL 1Mhz and pressure 300m
-This version tested in nVidia Jetson TX2 Ubuntu 18.04 with ROS melodic
+This version tested in ubuntu 18.04
 
 ## Licence: MIT License
 
