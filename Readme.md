@@ -1,4 +1,4 @@
-# ROS driver for Nortek DVL 1Mhz and pressure 300m
+# ROS driver for Nortek DVL 1Mhz and pressure 300m (still in progress, basic is working)
 This version tested in ubuntu 18.04
 
 ## Licence: MIT License
