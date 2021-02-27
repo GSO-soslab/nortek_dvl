@@ -30,7 +30,7 @@ $ catkin_make --pkg nortek_dvl
     $ sudo usermod -a G dialout {usrname} # add dialout in your username
     ```
 - Setup
-    - select **PNORBT7** for Botton Track
+    - select **PNORBT7** for Bottom Track
     - select **PNORI1/PNORS1/PNORC1** for Current Profile
 
 - Launch
@@ -44,10 +44,8 @@ $ catkin_make --pkg nortek_dvl
 
 ## Current setup:
 
-- Accoring to the setup, DVL is sending button_track msg (/nortek_dvl/dvl) and current_profile msg (/nortek_dvl/current_profile) as follow stream.
-
-    >button_track <---1s---> button_track <---1s---> button_track <---1s---> button_track <---1s---> current_profile
-- So the /nortek_dvl/dvl is 0.8 hz  /nortek_dvl/current_profile is 0.2 hz from **rostopic hz ...**
+- if you enabled current profile with 2 and bottom track with the max 8hz. you will receive bottom track at 4hz and current profile at 2 hz in ROS.
+- if you only enable bottom track with max 8hz, you will receive 8hz in ROS.
 
 
 ## Todos:
