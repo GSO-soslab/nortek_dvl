@@ -101,7 +101,7 @@ void DVLDriver::readall()
             decode(data);   
         }
 
-        std::chrono::milliseconds dura(2);
+        std::chrono::microseconds dura(1);
         std::this_thread::sleep_for(dura);
     }
 }
