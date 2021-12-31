@@ -5,7 +5,7 @@ This version tested in ubuntu 18.04
 
 ## Installation
 - Install dependencies
-    - Install ros serial, please check [here](http://wiki.ros.org/serial) for more information. For ubuntu 18.04/ROS melodic, just using command below  
+    - Install ros serial, please check [here](http://wjwwood.io/serial/doc/1.1.0/index.html) for more information. For ubuntu 18.04/ROS melodic, just using command below  
         ```
         $ sudo apt-get install ros-melodic-serial 
 
