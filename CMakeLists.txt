@@ -29,7 +29,7 @@ generate_messages(
 
 catkin_package(
  INCLUDE_DIRS include
- LIBRARIES nortek_dvl
+ #LIBRARIES nortek_dvl
  CATKIN_DEPENDS roscpp rospy std_msgs serial geometry_msgs message_runtime
  DEPENDS system_lib
 )
