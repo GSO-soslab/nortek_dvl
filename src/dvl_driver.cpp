@@ -13,6 +13,7 @@
 #include <string>
 #include <nortek_dvl/tic_toc.h>
 #include <unistd.h>
+#include <cstdlib>
 
 DVLDriver::DVLDriver(ros::NodeHandle node, ros::NodeHandle private_nh)
 {
@@ -191,16 +192,16 @@ void DVLDriver::decodeBottonTrack(const std::string& str)
 
     const char *c = str.c_str();
 
-    if(sscanf(c, "$PNORBT7,%15s,%f,%f,%lf,%lf,%lf,%f,%f,%f,%f,%f", 
+    if(sscanf(c, "$PNORBT7,%15c,%f,%f,%lf,%lf,%lf,%f,%f,%f,%f,%f", 
                    time, &msg.dt_1, &msg.dt_2, 
                    &msg.speed.x, &msg.speed.y, &msg.speed.z, &msg.figure_of_merit, 
                    &msg.vertical_distance[0], &msg.vertical_distance[1], &msg.vertical_distance[2], &msg.vertical_distance[3]) >= 1) 
     {
         // // TEST:
-        // printf("BT SYS: %s;  ",time);
         // printf("ROS: %f\n",ioTime.toSec());
-        
-        
+        double num_double = std::atof(time);
+        printf("BT SYS: %f\n",num_double);
+
         // publish buttom trak
         msg.header.stamp = ioTime;
         msg.header.frame_id = config.frame_id;
@@ -209,9 +210,9 @@ void DVLDriver::decodeBottonTrack(const std::string& str)
         // publish depth from buttom track
         std_msgs::Float32 depthMsg;
         depthMsg.data = (msg.vertical_distance[0]*cos(BEAM_ANGLE*PI/180.0) +
-                      msg.vertical_distance[1]*cos(BEAM_ANGLE*PI/180.0) +
-                      msg.vertical_distance[2]*cos(BEAM_ANGLE*PI/180.0) +
-                      msg.vertical_distance[3]*cos(BEAM_ANGLE*PI/180.0)) / 4;
+                         msg.vertical_distance[1]*cos(BEAM_ANGLE*PI/180.0) +
+                         msg.vertical_distance[2]*cos(BEAM_ANGLE*PI/180.0) +
+                         msg.vertical_distance[3]*cos(BEAM_ANGLE*PI/180.0)) / 4;
         depth_pub.publish(depthMsg);
 
         // publish velocity from buttom track
@@ -266,7 +267,6 @@ void DVLDriver::decodeCurrentProfileS(const std::string& str)
                    &cp_msg.atitude.z, &cp_msg.atitude_std_dev.z, &cp_msg.atitude.y, &cp_msg.atitude_std_dev.y, 
                    &cp_msg.atitude.x, &cp_msg.atitude_std_dev.x, &cp_msg.pressure, &cp_msg.pressure_std_dev, &cp_msg.temperature) >= 1) 
     {
-
         cp_msg.header.stamp = ioTime; 
 
         std_msgs::Float32 battery;

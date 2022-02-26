@@ -1,6 +1,8 @@
 # Button track: format as $PNORBT7
 Header header
 
+float32 dvl_time
+
 float32 dt_1 # Time from the trigger to the centre of the bottom echo [ms]
 float32 dt_2 # Time from the start of the NMEA output message to the centre of the bottom echo [ms]
 
