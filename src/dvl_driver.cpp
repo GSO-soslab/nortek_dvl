@@ -197,10 +197,7 @@ void DVLDriver::decodeBottonTrack(const std::string& str)
                    &msg.speed.x, &msg.speed.y, &msg.speed.z, &msg.figure_of_merit, 
                    &msg.vertical_distance[0], &msg.vertical_distance[1], &msg.vertical_distance[2], &msg.vertical_distance[3]) >= 1) 
     {
-        // // TEST:
-        // printf("ROS: %f\n",ioTime.toSec());
-        double num_double = std::atof(time);
-        printf("BT SYS: %f\n",num_double);
+        msg.dvl_time = std::atof(time);
 
         // publish buttom trak
         msg.header.stamp = ioTime;
