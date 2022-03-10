@@ -42,8 +42,8 @@ $ catkin_make --pkg nortek_dvl
     - go to /nortek_dvl/launch/star_dvl.launch
     - change "port_name" as you find the DVL
 
-## Todos:
+## TODO:
 
-- send serial back, setup DVL property: change hz, enable currect profile......
+- change bottom track to **PNORBT9** so that it includes pressure
 - apply ros cfg
 - close thread appropriately  
