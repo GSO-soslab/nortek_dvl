@@ -4,22 +4,12 @@ This version tested in ubuntu 18.04
 ## Licence: MIT License
 
 ## Installation
-- Install dependencies
-    - Install ros serial, please check [here](http://wiki.ros.org/serial) for more information. For ubuntu 18.04/ROS melodic, just using command below  
-        ```
-        $ sudo apt-get install ros-melodic-serial 
-
-        ```
-- Install DVL driver
-    ```
-    $ cd ~/your_path_catkin_ws/src
-    $ git clone https://github.com/URIsoslab/nortek_dvl.git
-    ```
-
-## Build
-```
+```sh
+# download
+git clone https://github.com/GSO-soslab/nortek_dvl -b glrc --recursive
+# build
 $ cd ~/your_path_catkin_ws/
-$ catkin_make --pkg nortek_dvl
+$ catkin build nortek_dvl
 ```
 
 ## Usage
