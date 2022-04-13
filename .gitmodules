@@ -1,0 +1,3 @@
+[submodule "dependency/serial"]
+	path = dependency/serial
+	url = https://github.com/wjwwood/serial
