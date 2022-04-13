@@ -9,7 +9,7 @@ find_package(catkin REQUIRED COMPONENTS
   std_msgs
   geometry_msgs
   message_generation
-  # serial
+  serial
 )
 
 add_message_files(
@@ -30,7 +30,7 @@ generate_messages(
 catkin_package(
  INCLUDE_DIRS include
 #  LIBRARIES nortek_dvl
- CATKIN_DEPENDS roscpp rospy std_msgs geometry_msgs message_runtime #serial 
+ CATKIN_DEPENDS roscpp rospy std_msgs geometry_msgs message_runtime serial 
  DEPENDS system_lib
 )
 
@@ -44,23 +44,23 @@ include_directories(
   ${catkin_INCLUDE_DIRS}
 )
 
-# # build library
-# add_library(dvl_driver
-#   src/dvl_driver.cpp
-# )
+# build library
+add_library(dvl_driver
+   src/dvl_driver.cpp
+)
 
-# target_link_libraries(dvl_driver
-#   ${catkin_LIBRARIES}
-# )
+target_link_libraries(dvl_driver
+   ${catkin_LIBRARIES}
+)
 
-# # build driver
-# add_executable(driver_node src/driver_node.cpp)
+# build driver
+add_executable(driver_node src/driver_node.cpp)
 
-# target_link_libraries(driver_node
-#   dvl_driver
-#   ${catkin_LIBRARIES}
-# )
-# add_dependencies(driver_node ${PROJECT_NAME}_generate_messages_cpp)
+target_link_libraries(driver_node
+ dvl_driver
+ ${catkin_LIBRARIES}
+)
+add_dependencies(driver_node ${PROJECT_NAME}_generate_messages_cpp)
 
 ## Test code
 # add_executable(serial_test test/serial_test.cpp)
