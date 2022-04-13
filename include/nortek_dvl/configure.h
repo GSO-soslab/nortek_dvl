@@ -27,7 +27,7 @@
 #define DEFAULT_FREQUENCY 1
 
 /* default data formt */
-#define DATA_NUM_BT 11                  // data number in Button track 
+#define DATA_NUM_BT 11                  // data number in bottom track 
 //#define DATA_NUM_WT 9999
 #define DATA_NUM_CP_I 7                 //data number in current profile - configure
 #define DATA_NUM_CP_S 15                  //data number in current profile - status

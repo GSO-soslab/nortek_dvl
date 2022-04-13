@@ -10,14 +10,20 @@
 
 #include <ros/ros.h>
 #include <std_msgs/String.h>
+#include <std_msgs/Float32.h>
+#include <geometry_msgs/TwistWithCovarianceStamped.h>
+
 #include <serial/serial.h>
 
-#include <nortek_dvl/DVL.h>
+#include <nortek_dvl/ButtomTrack.h>
 #include <nortek_dvl/CurrentProfile.h>
 #include <nortek_dvl/CellMeasure.h>
 #include "configure.h"
 #include <chrono>
 #include <thread>
+
+#define PI 3.1415926
+#define BEAM_ANGLE 25.0
 
 class DVLDriver
 {
@@ -68,9 +74,13 @@ private:
     bool calcChecksum(const std::string& nmea_data);
 
     // ROS
-    ros::Publisher button_track_pub;
+    ros::Publisher bottom_track_pub;
     ros::Publisher currect_profile_pub;
     ros::Publisher raw_pub;
+    // specific publish
+    ros::Publisher battery_pub;
+    ros::Publisher depth_pub;
+    ros::Publisher twist_pub;
 
     ros::Time ioTime;
 

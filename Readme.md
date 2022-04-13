@@ -42,14 +42,6 @@ $ catkin_make --pkg nortek_dvl
     - go to /nortek_dvl/launch/star_dvl.launch
     - change "port_name" as you find the DVL
 
-## Current setup:
-
-- Accoring to the setup, DVL is sending button_track msg (/nortek_dvl/dvl) and current_profile msg (/nortek_dvl/current_profile) as follow stream.
-
-    >button_track <---1s---> button_track <---1s---> button_track <---1s---> button_track <---1s---> current_profile
-- So the /nortek_dvl/dvl is 0.8 hz  /nortek_dvl/current_profile is 0.2 hz from **rostopic hz ...**
-
-
 ## Todos:
 
 - send serial back, setup DVL property: change hz, enable currect profile......

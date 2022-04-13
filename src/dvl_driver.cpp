@@ -16,10 +16,7 @@
 
 DVLDriver::DVLDriver(ros::NodeHandle node, ros::NodeHandle private_nh)
 {
-    // signal(SIGIO, signalHandler);
-
     // before open it, check if it still open? 
-
 
     // check param
     private_nh.param("frame_id", config.frame_id, std::string(FRAME_ID));
@@ -32,9 +29,12 @@ DVLDriver::DVLDriver(ros::NodeHandle node, ros::NodeHandle private_nh)
 
 
     // publisher
-    button_track_pub= node.advertise<nortek_dvl::DVL>("/nortek_dvl/dvl",10);
-    currect_profile_pub= node.advertise<nortek_dvl::CurrentProfile>("/nortek_dvl/current_profile",5);
-    raw_pub = node.advertise<std_msgs::String>("/nortek_dvl/raw",10);
+    bottom_track_pub= node.advertise<nortek_dvl::ButtomTrack>("/rov/sensors/dvl/buttom_track",10);
+    currect_profile_pub= node.advertise<nortek_dvl::CurrentProfile>("/rov/sensors/dvl/current_profile",5);
+    raw_pub = node.advertise<std_msgs::String>("/rov/sensors/dvl/raw",5);
+    battery_pub = node.advertise<std_msgs::Float32>("/rov/sensors/dvl/battery",1);
+    depth_pub = node.advertise<std_msgs::Float32>("/rov/sensors/dvl/depth",1);
+    twist_pub = node.advertise<geometry_msgs::TwistWithCovarianceStamped>("/rov/sensors/dvl/twist",5);
 }
 
 DVLDriver::~DVLDriver()
@@ -176,7 +176,7 @@ void DVLDriver::decodeBottonTrack(const std::string& str)
 {
     /*size: 100+ char*/
 
-    nortek_dvl::DVL msg;
+    nortek_dvl::ButtomTrack msg;
 
     char time[20];
 
@@ -187,11 +187,30 @@ void DVLDriver::decodeBottonTrack(const std::string& str)
                    &msg.speed.x, &msg.speed.y, &msg.speed.z, &msg.figure_of_merit, 
                    &msg.vertical_distance[0], &msg.vertical_distance[1], &msg.vertical_distance[2], &msg.vertical_distance[3]) >= 1) 
     {
-        // debug for print
+        // publish buttom trak
         msg.header.stamp = ioTime;
         msg.header.frame_id = config.frame_id;
+        bottom_track_pub.publish(msg);
 
-        button_track_pub.publish(msg);
+        // publish depth from buttom track
+        std_msgs::Float32 depthMsg;
+        depthMsg.data = (msg.vertical_distance[0]*cos(BEAM_ANGLE*PI/180.0) +
+                      msg.vertical_distance[1]*cos(BEAM_ANGLE*PI/180.0) +
+                      msg.vertical_distance[2]*cos(BEAM_ANGLE*PI/180.0) +
+                      msg.vertical_distance[3]*cos(BEAM_ANGLE*PI/180.0)) / 4;
+        depth_pub.publish(depthMsg);
+
+        // publish velocity from buttom track
+        geometry_msgs::TwistWithCovarianceStamped twistMsg;
+        twistMsg.header.stamp = ioTime;
+        twistMsg.header.frame_id = config.frame_id;
+        twistMsg.twist.twist.linear.x = msg.speed.x;
+        twistMsg.twist.twist.linear.y = msg.speed.y;
+        twistMsg.twist.twist.linear.z = msg.speed.z;
+        twistMsg.twist.covariance[0] = 0.005*0.005;
+        twistMsg.twist.covariance[7] = 0.005*0.005;
+        twistMsg.twist.covariance[14] = 0.005*0.005;
+        twist_pub.publish(twistMsg);
     }
     
 }
@@ -236,6 +255,9 @@ void DVLDriver::decodeCurrentProfileS(const std::string& str)
     {
         cp_msg.header.stamp = ioTime; 
 
+        std_msgs::Float32 battery;
+        battery.data = cp_msg.battery;
+        battery_pub.publish(battery);
     }
 }
 

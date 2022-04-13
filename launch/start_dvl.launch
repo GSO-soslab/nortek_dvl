@@ -1,6 +1,6 @@
 <launch>
   <arg name="frame_id" default="nortek_dvl" />
-  <arg name="port_name" default="/dev/ttyUSB0" />
+  <arg name="port_name" default="/dev/ttyTHS0" />
   <arg name="debug" default="false" />
 
 
